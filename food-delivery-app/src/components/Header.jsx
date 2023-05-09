@@ -1,6 +1,6 @@
 import React from 'react'
-import Logo from '../components/img/logo.png'
-import Avatar from '../components/img/avatar.png'
+import Logo from '../img/logo.png'
+import Avatar from '../img/avatar.png'
 import { MdOutlineShoppingBasket } from "react-icons/md";
 export default function Header() {
   return (
