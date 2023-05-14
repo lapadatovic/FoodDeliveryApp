@@ -2,15 +2,33 @@ import React from 'react'
 import Logo from '../img/logo.png'
 import Avatar from '../img/avatar.png'
 import { MdOutlineShoppingBasket } from "react-icons/md";
+
+import { Link } from 'react-router-dom';
+import {motion} from 'framer-motion'
+
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {app} from '../firebase.config'
+
 export default function Header() {
+
+  const firebaseAuth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const login = async () => {
+    const response = await signInWithPopup(firebaseAuth,provider);
+    console.log(response);
+  }
+  
   return (
     <header className='fixed z-50 w-screen p-6 px-16'>
         {/*  Desktop and Tablet */}
         <div className='hidden md:flex w-full h-full items-center justify-between'> 
         {/* Logo */}
           <div className='flex items-center gap-2'>
-            <img className='w-8 object-cover' src={Logo} alt="LogoImg"/>
-            <p className='text-headingColor text-xl font-bold'>Chicky</p>
+            <Link to={"/"}>
+              <img className='w-8 object-cover' src={Logo} alt="LogoImg"/>
+              <p className='text-headingColor text-xl font-bold'>Chicky</p>
+            </Link>
           </div>
           
           <div className='flex items-center gap-8'>
@@ -28,9 +46,15 @@ export default function Header() {
               </div>
             </div>
 
-            <img className='w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl' 
+            <div className='relative'>
+              <motion.img whileTap={{scale: 0.6}}
+                className='w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl' 
                 src={Avatar} 
-                alt="useprofile" />
+                alt="useprofile" 
+                onClick={login}
+              />
+            </div>
+            
           </div>
         </div>
 
