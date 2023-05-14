@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 
 
-// initialize app only if is not app
+// initialize app only if is not initialized
 const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig)
 
 // get db informations
