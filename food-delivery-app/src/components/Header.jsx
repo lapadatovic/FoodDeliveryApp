@@ -1,7 +1,7 @@
 import React from 'react'
 import Logo from '../img/logo.png'
 import Avatar from '../img/avatar.png'
-import { MdOutlineShoppingBasket } from "react-icons/md";
+import { MdOutlineShoppingBasket, MdAdd, MdLogout } from "react-icons/md";
 
 import { Link } from 'react-router-dom';
 import {motion} from 'framer-motion'
@@ -16,14 +16,18 @@ export default function Header() {
 
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
+
   const [{user}, dispatch] = useStateValue()
 
   const login = async () => {
-    const {user: {refreshToken, providerData}} = await signInWithPopup(firebaseAuth,provider);
-    dispatch({
-      type: actionType.SET_USER,
-      user: providerData[0],
-    })
+    if(!user) {
+      const {user: {refreshToken, providerData}} = await signInWithPopup(firebaseAuth,provider);
+      await dispatch({
+        type: actionType.SET_USER,
+        user: providerData[0],
+      })
+      localStorage.setItem('user',JSON.stringify(providerData[0]))
+    }
   }
   
   return (
@@ -37,7 +41,7 @@ export default function Header() {
               <p className='text-headingColor text-xl font-bold'>Chicky</p>
             </Link>
           </div>
-          
+
           <div className='flex items-center gap-8'>
             <ul className='flex items-center gap-8 '>
             <li className='text-base text-color hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>Home</li>
@@ -55,16 +59,29 @@ export default function Header() {
 
             <div className='relative'>
               <motion.img whileTap={{scale: 0.6}}
-                className='w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl' 
-                src={Avatar} 
-                alt="useprofile" 
+                className=' object-cover rounded-full w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl' 
+                src={user ? user.photoURL : Avatar} 
+                alt=""
                 onClick={login}
+                referrerPolicy="no-referrer"
               />
+              <div 
+                className='w-40 bg-gray-50 shadow-xl rounded-lg flex flex-col absolute top-12 right-0 py-2'
+              >
+                <p 
+                  className='flex px-4 py-2 items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base' 
+                  >
+                    New item <MdAdd/>
+                  </p>
+                <p 
+                  className='flex px-4 py-2 items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base'>
+                    Logout <MdLogout/> 
+                  </p>
+              </div>
             </div>
             
           </div>
         </div>
-
         {/* Mobile */}
         <div className='flex md:hidden w-full h-full'>
 

@@ -14,7 +14,7 @@ const firebaseConfig = {
 
 
 // initialize app only if is not initialized
-const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig)
+let app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 // get db informations
 const firestore = getFirestore(app);
