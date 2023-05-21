@@ -126,7 +126,7 @@ export default function Header() {
             </div>
           </div>
           
-          <Link to={"/"}>
+          <Link to={"/"} className='flex items-center gap-2' >
             <img  className='w-8 object-cover'src={Logo}  alt="LogoImg"/>
             <p className='text-headingColor text-xl font-bold'>Chicky</p>
           </Link>
