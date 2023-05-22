@@ -29,7 +29,8 @@ export default function Header() {
         user: providerData[0],
       })
       localStorage.setItem('user',JSON.stringify(providerData[0]))
-    }{
+    }else
+    {
       setIsMenu(!isMenu)
     }
   }
@@ -45,12 +46,12 @@ export default function Header() {
   }
 
   return (
-    <header className='fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16'>
+    <header className='fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary'>
         {/*  Desktop and Tablet */}
         <div className='hidden md:flex w-full h-full items-center justify-between'> 
         {/* Logo */}
           <div className='flex items-center gap-2'>
-            <Link to={"/"}>
+            <Link to={"/"} className='flex items-center gap-2'>
               <img  className='w-8 object-cover'src={Logo}  alt="LogoImg"/>
               <p className='text-headingColor text-xl font-bold'>Chicky</p>
             </Link>
@@ -130,7 +131,7 @@ export default function Header() {
             <img  className='w-8 object-cover'src={Logo}  alt="LogoImg"/>
             <p className='text-headingColor text-xl font-bold'>Chicky</p>
           </Link>
-          
+//        Here was conflict
           <div className='relative'>
               <motion.img whileTap={{scale: 0.6}}
                 className=' object-cover rounded-full w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl' 
@@ -176,7 +177,7 @@ export default function Header() {
                   </motion.div>
                 )
               }
-            </div>
+          </div>
         </div>
     </header>
   )
