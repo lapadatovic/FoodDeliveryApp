@@ -6,9 +6,9 @@ import Loader from './Loader';
 import {storage} from '../firebase.config'
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 
-import { saveItem } from '../utils/firebaseFunctions';
-
-
+import { getAllFoodItems, saveItem } from '../utils/firebaseFunctions';
+import { useStateValue } from './context/StateProvider';
+import { actionType } from './context/reducer';
 
 export default function CreateContainer() {
   
@@ -22,6 +22,17 @@ export default function CreateContainer() {
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
  
+  const [{foodItems}, dispatch] = useStateValue();
+
+  const fetchData = async () => {
+    await getAllFoodItems().then(data => {
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+        foodItems: data
+      })
+    })
+  }
+
 
   const uploadImage = (e) => {
     setIsLoading(true);
@@ -56,6 +67,7 @@ export default function CreateContainer() {
       })
     } )
   }
+  
   const deleteImage = () => {
     setIsLoading(true);
     const deleteRef = ref(storage, imageAsset);
@@ -103,6 +115,7 @@ export default function CreateContainer() {
           setFields(false);
         },4000)
 
+        fetchData();
       }
     }catch(error){
       console.log(error);
@@ -123,6 +136,10 @@ export default function CreateContainer() {
     setPrice('');
     setCategory('Select Category');
   }
+
+ 
+
+  
 
   return (
     <div className='w-full min-h-screen flex items-center justify-center'>
