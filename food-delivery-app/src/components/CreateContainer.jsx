@@ -98,7 +98,7 @@ export default function CreateContainer() {
         const data = {
           id: `${Date.now()}`,
           title: title,
-          imgageURl: imageAsset,
+          imageURL: imageAsset,
           category: category,
           calories: calories,
           price: price,
