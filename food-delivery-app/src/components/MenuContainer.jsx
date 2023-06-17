@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import {IoFastFood} from 'react-icons/io5'
 import {categories} from '../utils/data'
 import {motion} from 'framer-motion'
+import RowContainer from './RowContainer'
+import {useStateValue} from './context/StateProvider'
+
 function MenuContainer() {
 
-    const [filter, setFilter] = useState('curry');
+    const [filter, setFilter] = useState('chicken');
+    const [{foodItems}, dispatch] = useStateValue();
 
   return (
     <section className='w-full mt-5' id='menu'>
@@ -34,6 +38,10 @@ function MenuContainer() {
                         </p>
                     </motion.div>
                 ))}
+            </div>
+
+            <div className='w-full'>
+                <RowContainer flag={false} data={foodItems?.filter(item  => item.category == filter)} />
             </div>
         </div>
     </section>

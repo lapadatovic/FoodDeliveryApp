@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import {MdShoppingBasket} from 'react-icons/md'
 import {motion} from 'framer-motion'
+import NotFound from '../img/NotFound.svg'
 
 export default function RowContainer({flag, data, scrollValue}) {
   const rowContainer = useRef();
@@ -13,15 +14,17 @@ export default function RowContainer({flag, data, scrollValue}) {
     <div
       ref={rowContainer}
       className={`w-full my-12  flex items-center gap-3 scroll-smooth ${
-      flag ?'overflow-x-scroll scrollbar-none':'overflow-x-hidden flex-wrap'}`}
+        flag 
+        ?'overflow-x-scroll scrollbar-none'
+        :'overflow-x-hidden flex-wrap justify-center'}`}
     >
-      {data && data.map(item => (
+      {data && data.length > 0 ? data.map(item => (
         <div 
           key={item?.id} 
           className='w-300 min-w-[300px] md:w-340 md:min-w-[340px]  h-auto bg-cardOverlay rounded-lg p-2 backdrop-blur-lg hover:drop-shadow-lg flex flex-col items-center justify-between'>
         <div className='w-full flex items-center justify-between relative'>
           <motion.img whileHover={{scale: 1.1}}
-            className='object-contain -mt-4 h-36 drop-shadow-lg md:w-40'
+            className='object-contain mt-1 h-36 drop-shadow-lg md:w-40'
             src={item?.imageURL} 
             alt="" 
           />
@@ -41,7 +44,10 @@ export default function RowContainer({flag, data, scrollValue}) {
           </div>
         </div>
       </div> 
-      ))}
+      )) :  <div className='w-full flex flex-col items-center justify-center'> 
+              <img className='h-60' src={NotFound} />
+              <p className='text-xl text-headingColor font-semibold my-2'>Items Not Available</p>
+            </div>  }
     </div>
   )
 }
