@@ -9,7 +9,7 @@ import CartContainer from './CartContainer'
 
 export default function MainContainer() {
 
-  const [{foodItems}, dispatch] = useStateValue();
+  const [{foodItems, cartShow}, dispatch] = useStateValue();
 
   const [scrollValue, setScrollValue] = useState(0)
 
@@ -53,7 +53,8 @@ export default function MainContainer() {
 
         <MenuContainer />
 
-        <CartContainer />
+       {cartShow && (<CartContainer />)}
+        
     </div>
   )
 }
